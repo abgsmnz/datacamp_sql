@@ -19,3 +19,20 @@ FROM cities AS c1
     ON c1.country_code = c2.code
 -- Order by descending country code
 ORDER BY code DESC;
+
+-- More of LEFT JOIN --
+
+-- Select fields
+SELECT region, AVG(gdp_percapita) AS avg_gdp
+-- From countries (alias as c)
+FROM countries AS c
+  -- Left join with economies (alias as e)
+  LEFT JOIN economies AS e
+    -- Match on code fields
+    ON c.code = e.code
+-- Focus on 2010
+WHERE year = 2010
+-- Group by region
+GROUP BY region
+-- Order by descending avg_gdp
+ORDER by avg_gdp DESC;
