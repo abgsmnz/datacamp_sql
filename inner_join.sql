@@ -23,3 +23,57 @@ INNER JOIN languages AS l
 -- Match using the code column
 USING (code);
 
+-- Select country and language names, aliased
+SELECT c.name AS country, l.name AS language
+-- From countries (aliased)
+FROM countries AS c
+-- Join to languages (aliased)
+INNER JOIN languages AS l
+-- Use code as the joining field with the USING keyword
+USING (code);
+
+-- Select fields
+SELECT c.name, p.year, fertility_rate, e.year, unemployment_rate
+FROM countries AS c
+INNER JOIN populations AS p
+ON c.code = p.country_code
+-- Join to economies (as e)
+INNER JOIN economies AS e 
+-- Match on country code
+ON c.code = e.code;
+
+SELECT name, e.year, fertility_rate, unemployment_rate
+FROM countries AS c
+INNER JOIN populations AS p
+ON c.code = p.country_code
+INNER JOIN economies AS e
+ON c.code = e.code
+-- Add an additional joining condition such that you are also joining on year
+	AND e.year = p.year;
+  
+  SELECT 
+    c1.name AS city,
+    code,
+    c2.name AS country,
+    region,
+    city_proper_pop
+FROM cities AS c1
+-- Perform an inner join with cities as c1 and countries as c2 on country code
+INNER JOIN countries AS c2
+ORDER BY code DESC;
+
+
+SELECT 
+    c1.name AS city,
+    code,
+    c2.name AS country,
+    region,
+    city_proper_pop
+FROM cities AS c1
+-- Perform an inner join with cities as c1 and countries as c2 on country code
+INNER JOIN countries AS c2
+ON country_code = code
+ORDER BY code DESC;
+
+
+
