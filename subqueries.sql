@@ -148,3 +148,23 @@ WHERE year = 2015 AND economies.code NOT IN (
   )
 )
 ORDER BY inflation_rate;
+
+
+-- repaso nuevo Subquerie inside FROM
+-- Parte 1
+-- Select code, and language count as lang_num
+SELECT code, COUNT(name) AS lang_num
+FROM languages
+GROUP BY code;
+
+-- parte 2
+-- Select local_name and lang_num from appropriate tables
+SELECT countries.local_name, sub.lang_num
+FROM countries,
+  (SELECT code, COUNT(*) AS lang_num
+  FROM languages
+  GROUP BY code) AS sub
+-- Where codes match
+WHERE countries.code = sub.code
+ORDER BY lang_num DESC;
+
