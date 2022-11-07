@@ -168,3 +168,30 @@ FROM countries,
 WHERE countries.code = sub.code
 ORDER BY lang_num DESC;
 
+
+-- Ejercicio final
+-- Select relevant fields
+SELECT code, inflation_rate, unemployment_rate
+FROM economies
+WHERE year = 2015 
+  AND code NOT IN
+-- Subquery returning country codes filtered on gov_form
+	(SELECT countries.code
+  FROM countries
+  WHERE gov_form LIKE '%Republic%' OR gov_form LIKE '%Monarchy%')
+ORDER BY inflation_rate;
+
+-- Ejercicio 2 final
+-- Select fields from cities
+SELECT name, country_code, city_proper_pop, metroarea_pop, city_proper_pop / metroarea_pop * 100 AS city_perc
+FROM cities
+-- Use subquery to filter city name
+WHERE name IN
+(SELECT capital
+FROM countries
+WHERE continent = 'Europe' OR continent LIKE '%America')
+-- Add filter condition such that metroarea_pop does not have null values
+AND metroarea_pop IS NOT NULL
+-- Sort and limit the result
+ORDER BY city_perc DESC
+LIMIT 10;
